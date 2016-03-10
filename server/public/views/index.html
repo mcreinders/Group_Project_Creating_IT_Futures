@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>IT Ready Dashboard</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular-route/angular-route.min.js"></script>
+    <script src="assets/scripts/client.min.js"></script>
+    <script src="vendor/d3/d3.min.js"></script>
+    <base href="/">
+</head>
+<body ng-controller="MainController as main">
+<a href="/"><img src="../assets/img/CITFF_LogoWithTag.png" alt="CITFF_Logo" class="logo"></a><br><br><br>
+
+<form class="dateForm">
+    <p>Start Date: <input type="date" ng-model="startDate" ng-value="{{startDate | date: 'yyyy-MM-dd'}}"> End Date: <input type="date" ng-model="endDate" ng-value="{{endDate | date: 'yyyy-MM-dd'}}"><button class="dateSelect" ng-click="submitDate()">Select</button></p>
+</form>
+<!--MAIN LAYOUT ELEMENTS: TOTALS TABLE, DATA AREA, AND CONTROL PANEL-->
+<div class="mainContent">
+<div class="totalsTable">
+    <img src="../assets/img/IT_READY_300dpi.png" alt="IT_Ready_Logo" class="ITlogo">
+    <div class="tableMain">
+        <div class="tableColumn">
+            <div class="tableHeading">Totals</div>
+            <div class="headingRow">Served</div>
+            <div class="headingRow">Completed</div>
+            <div class="headingRow">Certified A+</div>
+            <div class="headingRow">Placed</div>
+            <div class="headingRow">Certified Network+</div>
+            <div class="headingRow">Certified Server+</div>
+            <div class="bottomHeadingRow">Certified Security+</div>
+        </div>
+
+        <div class="tableColumn">
+            <div class="tableHeading">Number</div>
+            <div class="tableRow">{{numServed}}</div>
+            <div class="tableRow">{{completed.number}}</div>
+            <div class="tableRow">{{certified.number}}</div>
+            <div class="tableRow">{{placed.number}}</div>
+            <div class="tableRow">{{certNetwork.number}}</div>
+            <div class="tableRow">{{certServer.number}}</div>
+            <div class="bottomRow">{{certSecurity.number}}</div>
+        </div>
+
+        <div class="tableColumn">
+            <div class="tableHeading">Percentage</div>
+            <div class="tableRow">-</div>
+            <div class="tableRow">{{completed.percent}}%</div>
+            <div class="tableRow">{{certified.percent}}%</div>
+            <div class="tableRow">{{placed.percent}}%</div>
+            <div class="tableRow">{{certNetwork.percent}}%</div>
+            <div class="tableRow">{{certServer.percent}}%</div>
+            <div class="bottomRow">{{certSecurity.percent}}%</div>
+        </div>
+    </div>
+
+    <h5 class="avgWageHeading">Average Wage at Placement: ${{avgWageAtPlacement}}/hr</h5>
+    <h5 class="avgWageHeading">Average Current Wage: ${{avgCurrentWage}}/hr</h5>
+
+    <ul class="nav nav-tabs nav-justified">
+        <li><a href="javascript:void(0);" ng-class="{selected: tab=='a'}" ng-click="tab = 'a'">Retention Rates</a></li>
+        <li><a href="javascript:void(0);" ng-class="{selected: tab=='b'}" ng-click="tab = 'b' ">Salary Calculator</a></li>
+        <li><a href="javascript:void(0);" ng-class="{selected: tab=='c'}" ng-click="tab = 'c' ">Top 5 Employers</a></li>
+    </ul>
+
+    <div class="retention" ng-show="tab == 'a'">
+        <h5>Retention Rate Over Time</h5>
+
+        <div class="tableMain">
+            <div class="tableColumn">
+                <div class="tableHeading">Milestone</div>
+                <div class="tableRow">3 mo.</div>
+                <div class="tableRow">6 mo.</div>
+                <div class="tableRow">1 yr.</div>
+                <div class="tableRow">2 yr.</div>
+                <div class="tableRow">3 yr.</div>
+                <div class="tableRow">4 yr.</div>
+                <div class="bottomRetentionRow">5 yr.</div>
+            </div>
+
+            <div class="tableColumn">
+                <div class="tableHeading">Retained / Placed</div>
+                <div class="tableRow">{{retentionData.threeMonth.fraction}}</div>
+                <div class="tableRow">{{retentionData.sixMonth.fraction}}</div>
+                <div class="tableRow">{{retentionData.oneYear.fraction}}</div>
+                <div class="tableRow">{{retentionData.twoYear.fraction}}</div>
+                <div class="tableRow">{{retentionData.threeYear.fraction}}</div>
+                <div class="tableRow">{{retentionData.fourYear.fraction}}</div>
+                <div class="bottomRetentionRow">{{retentionData.fiveYear.fraction}}</div>
+            </div>
+
+            <div class="tableColumn">
+                <div class="tableHeading">Retention Rate</div>
+                <div class="tableRow">{{retentionData.threeMonth.percent}}</div>
+                <div class="tableRow">{{retentionData.sixMonth.percent}}</div>
+                <div class="tableRow">{{retentionData.oneYear.percent}}</div>
+                <div class="tableRow">{{retentionData.twoYear.percent}}</div>
+                <div class="tableRow">{{retentionData.threeYear.percent}}</div>
+                <div class="tableRow">{{retentionData.fourYear.percent}}</div>
+                <div class="bottomRetentionRow">{{retentionData.fiveYear.percent}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="salary" ng-show="tab == 'b'">
+         <h5>Average Salary Calculator</h5>
+           <!-- <p class="avgSalaryP">Certified A+: <input type="checkbox" ng-model="certDate"></p> -->
+           <p class="avgSalaryP">Certified Network+: <input type="checkbox" ng-model="networkPlus"></p>
+           <p class="avgSalaryP">Certified Server+: <input type="checkbox" ng-model="serverPlus"></p>
+           <p class="avgSalaryP">Certified Security+: <input type="checkbox" ng-model="securityPlus"></p>
+           <p class="avgSalaryP">Other Certification: <input type="checkbox" ng-model="otherCert"></p><br>
+           <button class="avgSalButton" ng-click="calcAvgSalary()">Calculate</button>
+           <p class="avgSalaryP2">Calculated Average Salary: <span class="blueSpan">${{calculatedSalary.avgWage}}</span> / hr</p>
+           <p class="avgSalaryP2">Number of Students: <span class="blueSpan">{{calculatedSalary.count}}</span></p><br>
+     </div>
+
+    <div class="employers" ng-show="tab == 'c'">
+        <h5>Top 5 Employers</h5>
+        <p class="employerP">1: {{topFive[0].key}} (<span class="blueSpan">{{topFive[0].value}}</span> students hired)</p>
+        <p class="employerP">2: {{topFive[1].key}} (<span class="blueSpan">{{topFive[1].value}}</span> students hired)</p>
+        <p class="employerP">3: {{topFive[2].key}} (<span class="blueSpan">{{topFive[2].value}}</span> students hired)</p>
+        <p class="employerP">4: {{topFive[3].key}} (<span class="blueSpan">{{topFive[3].value}}</span> students hired)</p>
+        <p class="employerP">5: {{topFive[4].key}} (<span class="blueSpan">{{topFive[4].value}}</span> students hired)</p>
+        <br>
+    </div>
+</div>
+
+<div class="verticalRule"></div>
+
+<!--DATA AREA: GRAPHS AND CHARTS DISPLAY HERE-->
+<div class="chartAndControls">
+
+<div class="dataArea">
+    <div class="pieControls" ng-show="chartTab == 'pie'">
+        <h3>{{pieTitle}}</h3>
+        <div class="tooltipBox"></div>
+        <div class="popUpContainer" ng-show="averageShow">
+          <div class="popUpInfo">
+              <h5>Average Starting Wage by {{selectedDemographic}}</h5>
+              <div ng-repeat="x in pieWageInfo">
+                  {{x.name}}: ${{x.averageWage}}/hr
+              </div>
+          </div>
+        </div>
+        <div id="chart"></div>
+    </div>
+
+    <div id="line" class="lineControls" ng-show="chartTab == 'line'">
+        <!--Line Graph Appears Here-->
+    </div>
+
+    <img src="../assets/img/plus_icon.png" alt="plusIcon" class="plusIcon" ng-show="chartTab == 'pie'" ng-mouseover="showAverageSalary()" ng-mouseout="hideAverageSalary()"><br>
+</div>
+<div class="verticalRule"></div>
+<!--CONTROL PANEL: CHART CONTROLS FOR PIE CHART AND LINE GRAPH-->
+<div class="controlPanel">
+    <h5>Control Panel</h5>
+
+    <ul class="nav nav-tabs nav-justified">
+        <li><a href="javascript:void(0);" ng-class="{selected: chartTab=='pie'}" ng-click="chartTab = 'pie'">Pie</a></li>
+        <li><a href="javascript:void(0); " ng-class="{selected: chartTab=='line'}" ng-click="chartTab = 'line'">Line</a></li>
+    </ul>
+
+    <div id="pieControlPanel" class="pieControls" ng-show="chartTab == 'pie'">
+        <h5 class="dropdownHeading">Demographic Data</h5>
+        <select class="demographicDropdown" ng-model="selectedDemographic" ng-options="demographic for demographic in demographicList" ng-change="generatePieCharts(startDate, endDate)"></select>
+
+        <h5 class="dropdownHeading">Program Progress</h5>
+        <select class="progressDropdown" ng-model="selectedProgress" ng-options="progress for progress in progressList" ng-change="generatePieCharts(startDate, endDate)"></select>
+        <h5>Pie Chart Legend</h5>
+    </div>
+
+    <div id="lineControlPanel" class="lineControls" ng-show="chartTab == 'line'">
+        <h5 class="dropdownHeading">Line Graph Type</h5>
+        <select class="lineGraphDropdown" ng-model="selectedLineGraph" ng-options="lineGraph for lineGraph in lineGraphList" ng-change="genLineGraph(smartSheetData, selectedLineGraph, startDate, endDate)"></select>
+        <h5>Line Graph Legend</h5>
+    </div>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+    <p class="copyright">&copy; Copyright 2016 -- Creating IT Futures Foundation</p>
+</div>
+
+</body>
+</html>

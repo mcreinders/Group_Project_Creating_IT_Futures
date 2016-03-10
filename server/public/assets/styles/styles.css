@@ -1,0 +1,286 @@
+.logo{
+    width: 310px;
+    display: block;
+    margin: .25% 0 0 5%;
+    float: left;
+}
+.ITlogo{
+    display: block;
+    margin: 10px auto 4px auto;
+    width: 128px;
+}
+.dateForm{
+    text-align: center;
+    margin-right: 10%;
+}
+.mainContent{
+    border: 2px solid gray;
+    border-radius: 4px;
+    padding: 0;
+    margin: 0 .5% .25% .5%;
+    height: 491px;
+    -moz-box-shadow: 0 0 2px 2px lightgrey;
+    -webkit-box-shadow: 0 0 1px 1px lightgrey;
+    box-shadow: 0 0 2px 2px lightgrey;
+    background-color: #eaeaea;
+}
+p{
+    margin-bottom: .5%;
+}
+h1, h3, h4, h5 {
+    text-align: center;
+}
+/*////////////////////*/
+/*TOTALS TABLE SECTION*/
+/*////////////////////*/
+.totalsTable, .dataArea, .controlPanel{
+    float: left;
+    height: 488px;
+}
+.totalsTable {
+    width: 33%;
+    overflow-y: scroll;
+}
+.tableColumn{
+    float: left;
+    width: 33%;
+}
+.tableHeading{
+    height: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.tableRow, .headingRow, .bottomRow, .bottomHeadingRow, .bottomRetentionRow {
+    border-top: 1px solid black;
+    height: 30px;
+    text-align: center;
+    padding-top: 4px;
+}
+.headingRow, .bottomHeadingRow {
+    text-align: left;
+    padding-left: 10px;
+}
+.bottomRow, .bottomHeadingRow{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 30px;
+    margin-bottom: 18px;
+}
+.avgWageHeading{
+    margin-bottom: 21px;
+}
+/*/////////////////////////////////////////////////////////////////*/
+/*RETENTION, SALARY CALCULATOR, AND EMPLOYERS SECTION TABLE SECTION*/
+/*/////////////////////////////////////////////////////////////////*/
+.selected {
+    background-color: #F1F1F1;
+}
+.retentionSpan {
+    display: inline-block;
+    text-align: center;
+    width: 25%;
+    margin-bottom: 12px;
+}
+.boldSpan{
+    font-weight: bold;
+}
+.blueSpan {
+  font-weight: bold;
+  color: #337ab7;
+}
+.avgSalaryP{
+    margin-left: 33%;
+}
+.avgSalaryP2{
+    margin-left: 25%;
+    font-weight: bold;
+}
+.avgSalButton{
+    display: block;
+    margin: -5px auto 15px auto;
+}
+.employerP{
+    margin-left: 23%;
+}
+/*///////////////////////*/
+/*CHART AND GRAPH SECTION*/
+/*///////////////////////*/
+.chartAndControls{
+    width: 66%;
+    float: left;
+    border-radius: 4px;
+    height: 490px;
+}
+.dataArea{
+    width: 76%;
+}
+svg{
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+.plusIcon{
+    height: 48px;
+    width: 48px;
+    display: block;
+    position: relative;
+    bottom: 14px;
+    right: 4px;
+}
+.popUpContainer {
+    position: absolute;
+    display: block;
+    float: left;
+    margin-left: 45px;
+    bottom: 28%;
+    z-index: 9;
+}
+.popUpInfo{
+    font-size: 12px;
+    padding: 1px 10px 10px 10px;
+    box-shadow: 0 0 3px #999999;
+    border-radius: 10px;
+    width: 288px;
+    height: auto;
+    position: relative;
+    right: 46px;
+    top: 36px;
+    background-color: #F1F1F1;
+    opacity: 1;
+    word-wrap: break-word;
+}
+.lineGraphTitle{
+    font-size: 24px;
+}
+.verticalRule{
+    margin: 4px .25% 4px .25%;
+    border: 1px solid lightgray;
+    border-radius: 1px;
+    height: 479px;
+    float: left;
+}
+.controlPanel{
+    width: 23%;
+    padding-left: 4px;
+}
+select{
+    display: block;
+    margin: auto;
+    width: 98%;
+}
+.demographicDropdown, .progressDropdown, .lineGraphDropdown {
+    text-align: center;
+}
+.dropdownHeading{
+    margin-top: 32px;
+}
+.progressDropdown{
+    margin-bottom: 28px;
+}
+.lineGraphDropdown{
+    margin-bottom: 103px;
+}
+.footer{
+    text-align: center;
+    color: gray;
+}
+/*-----------------------------*/
+/*--------D3 Styling-----------*/
+/*-----------------------------*/
+h2.chartTitle {
+    color: darkblue;
+    font: bold 20px/22px "Arial", sans-serif;
+    text-align: center;
+}
+.chartArea {
+    height: 350px;
+    display: block;
+    text-align: center;
+}
+.domain {
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+.line {
+    stroke-width: 4px;
+    fill: none;
+}
+.legend text {
+    font: 11px "Arial", sans-serif;
+}
+rect {
+    stroke-width: 2;
+}
+svg {
+    margin:auto;
+    position: absolute;
+}
+#pieHeading{
+    margin-top:5px;
+    margin-bottom: 5px;
+}
+#chart {
+    height: 400px;
+    margin: 0 auto;
+    position: relative;
+    width: 650px;
+}
+.tooltips {
+    background: #F1F1F1;
+    box-shadow: 0 0 3px #999999;
+    border-radius: 10px;
+    display: block !important;
+    font-size: 12px;
+    right: 0px;
+    padding: 0px;
+    position: relative;
+    text-align: center;
+    top: 378px;
+    width: 220px;
+    float: right;
+}
+.legend {
+    border: solid orange;
+}
+rect {
+    cursor: pointer;
+    stroke-width: 2;
+    border: solid red;
+}
+rect.disabled {
+    fill: transparent !important;
+}
+h1 {
+    font-size: 14px;
+    text-align: center;
+}
+.label{
+    color:black;
+    width: 300%;
+    text-align: center;
+    align-content: center;
+    margin:auto;
+    padding: 0;
+    font-size: 12px;
+    word-wrap: break-word
+}
+#legendArea {
+  height: 200px;
+  width: 200px;
+}
+#pieLegend{
+    height: 209px;
+    width: 200px;
+}
+.nav-tabs{
+}
+.nav-tabs li a.selected{
+    background-color: #d5d5d5;
+}
